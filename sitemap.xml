@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://jijeshmohan.github.io/</loc>
+    <lastmod>2015-03-24T22:44:24+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://jijeshmohan.github.io/post/gorillamux/</loc>
+    <lastmod>2015-03-24T22:44:24+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://jijeshmohan.github.io/post/redcukes/</loc>
+    <lastmod>2012-03-21T17:46:00+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://jijeshmohan.github.io/about/</loc>
+    <lastmod>2012-01-24T17:38:11+05:30</lastmod>
+  </url>
+  
+</urlset>

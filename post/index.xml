@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Parthenon</title>
+    <link>http://jijeshmohan.github.io/post/</link>
+    <description>Recent content in Posts on Parthenon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c), Jijesh Mohan; all rights reserved.</copyright>
+    <lastBuildDate>Tue, 24 Mar 2015 22:44:24 +0530</lastBuildDate>
+    <atom:link href="http://jijeshmohan.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Gorilla mux - Issue with order of routes</title>
+      <link>http://jijeshmohan.github.io/post/gorillamux/</link>
+      <pubDate>Tue, 24 Mar 2015 22:44:24 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/gorillamux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;gorillatoolkit.org&#34;&gt;Gorilla toolkit&lt;/a&gt; is one of the favorite http multiplexer library of gophers. I have been using the gorilla mux for quite sometime for micro services.
+Mux allows you to define both static and dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Gorilla mux allows you to add similar routes unlike other multiplexer libraries like http-router. Consider the following scenario&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;router.Handle(&amp;quot;/user/{name}&amp;quot;,userHandle)
+router.Handle(&amp;quot;/user/admin&amp;quot;,adminHandle)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you hit &lt;code&gt;/user/user1&lt;/code&gt; as expected &lt;code&gt;userHandle&lt;/code&gt; function will be called.
+But where as in the case of &lt;code&gt;/user/admin&lt;/code&gt; the &lt;code&gt;userHandle&lt;/code&gt; will be called instead of &lt;code&gt;adminHandle&lt;/code&gt;. This means the order of routes matter. Whichever route matches first, will be called by gorilla mux.&lt;/p&gt;
+
+&lt;p&gt;One way to fix this issue is to change the order of routes in the above code. This is easy when you have very less number of routes but will become very tedious when the number of routes increases.&lt;/p&gt;
+
+&lt;p&gt;There is another way to handle this issue is to sort the routes depends on the length of the path and also ensure that static routes comes before dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Implement &lt;a href=&#34;https://golang.org/src/sort/sort.go#12&#34;&gt;sort&lt;/a&gt; interface of golang for the endpoints and sort it before adding it to mux router. You can find the implementation  &lt;a href=&#34;https://github.com/jijeshmohan/janus/blob/master/rest/endpoint.go&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Redcukes</title>
+      <link>http://jijeshmohan.github.io/post/redcukes/</link>
+      <pubDate>Wed, 21 Mar 2012 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/redcukes/</guid>
+      <description>&lt;p&gt;I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files.This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.&lt;/p&gt;
+
+&lt;p&gt;To avoid this problem I have developed a ruby gem called &lt;a href=&#34;https://github.com/jijeshmohan/redcukes&#34;&gt;Redcukes&lt;/a&gt; for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.&lt;/p&gt;
+
+&lt;p&gt;For using this gem, make sure that the REST API is enabled in redmine (&lt;code&gt;Administration &amp;gt; Settings -&amp;gt; Authentication -&amp;gt; Enable REST web service&lt;/code&gt;). It is better to define another user role for cucumber tests with required issue modification rights.&lt;/p&gt;
+
+&lt;p&gt;Install gem using gem install redcukes. In cucumber projects directory, create env.rb under support directory.&lt;/p&gt;
+
+&lt;p&gt;Edit env.rb file and add following configuration&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;redcukes&#39;
+
+Redcukes::Redmine.configure do |config|
+ config.site = redmine url
+ config.user = redmine username
+ config.password = redmine password
+ end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is also possible to add issue filter using search_filter property&lt;/p&gt;
+
+&lt;p&gt;e.g : &lt;code&gt;config.search_filter = {:project_id =&amp;gt; ‘iframe’,:tracker_id =&amp;gt; 2}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The default status updates are “Resolved” or “Rejected” according to feature passed or failed. This can be customized like below&lt;/p&gt;
+
+&lt;p&gt;e.g &lt;code&gt;config.result_status = {:passed =&amp;gt; 7,:failed =&amp;gt; 8}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;I have created two more issue status called Passed, Failed and gave given these status ids in the above configuration.&lt;/p&gt;
+
+&lt;p&gt;This will be a perfect executable documentation for your project.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
