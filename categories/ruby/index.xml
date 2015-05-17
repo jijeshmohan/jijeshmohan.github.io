@@ -16,7 +16,7 @@
       <pubDate>Wed, 21 Mar 2012 17:46:00 +0530</pubDate>
       
       <guid>http://jijeshmohan.github.io/post/redcukes/</guid>
-      <description>&lt;p&gt;I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files.This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.&lt;/p&gt;
+      <description>&lt;p&gt;I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files. This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.&lt;/p&gt;
 
 &lt;p&gt;To avoid this problem I have developed a ruby gem called &lt;a href=&#34;https://github.com/jijeshmohan/redcukes&#34;&gt;Redcukes&lt;/a&gt; for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.&lt;/p&gt;
 

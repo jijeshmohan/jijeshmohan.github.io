@@ -11,12 +11,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<meta name="description" content="">
-<meta name="keywords" content="">
-<meta name="author" content="">
+<meta name="description" content="Running redmine stories using cucumber">
+<meta name="keywords" content="ruby,cucumber,">
+<meta name="author" content="Jijesh Mohan">
 
   <meta property="og:title" content="Redcukes" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="Running redmine stories using cucumber" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="http://jijeshmohan.github.io/post/redcukes/" />
@@ -115,10 +115,8 @@
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-day"><sup>21</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2012</span>
+                	<span class="post-date-month">21 </span><span class="post-date-month">Mar</span> <span class="post-date-year">2012</span>
             	</span>
-            	
-            
             	
             
 
@@ -135,9 +133,7 @@
 
 			
 
-			
-
-            <p>I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files.This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.</p>
+            <p>I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files. This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.</p>
 
 <p>To avoid this problem I have developed a ruby gem called <a href="https://github.com/jijeshmohan/redcukes">Redcukes</a> for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.</p>
 
@@ -170,6 +166,13 @@ Redcukes::Redmine.configure do |config|
 
 	
 			
+		    	<div class="social-sharing">
+	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
+	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
+	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f&title=Redcukes&summary=I%20have%20seen%20projects%20where%20userstories%20are%20managed%20in%20redmine%20along%20with%20acceptance%20criteria.%20But%20while%20automating%20with%20cucumber%20all%20these%20stories%20and%20scenarios%20are%20again%20replicated%20in%20cucumber%20feature%20files.%20This%20leads%20to%20inconsistency%20due%20to%20the%20story%20modification%20in%20redmine%20which%20is%20not%20synced%20with%20cucumber%20feature%20files.%20To%20avoid%20this%20problem%20I%20have%20developed%20a%20ruby%20gem%20called%20Redcukes%20for%20integrating%20redmine%20with%20cucumber%20and%20we%20can%20run%20cucumber%20against%20the%20user%20stories%20stored%20in%20redmine%20and%20update%20execution%20status%20back%20to%20redmine.}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
+	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=Redcukes&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
+</div>
+		    
 
 			
 
@@ -235,6 +238,13 @@ Redcukes::Redmine.configure do |config|
   </div>
 	
 
+	
+		<script type="text/javascript">
+			function popupShare(url) {
+				window.open(url, '_blank', 'scrollbars,resizable,height=525,width=600');
+				return false;
+			}
+		</script>
 	
 
   

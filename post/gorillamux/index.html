@@ -11,12 +11,12 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<meta name="description" content="">
-<meta name="keywords" content="">
-<meta name="author" content="">
+<meta name="description" content="Gorilla mux - Issue with order of routes">
+<meta name="keywords" content="go,golang,gorilla mux,routes,">
+<meta name="author" content="Jijesh Mohan">
 
   <meta property="og:title" content="Gorilla mux - Issue with order of routes" />
-<meta property="og:description" content="" />
+<meta property="og:description" content="Gorilla mux - Issue with order of routes" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:url" content="http://jijeshmohan.github.io/post/gorillamux/" />
@@ -115,10 +115,8 @@
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-day"><sup>24</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2015</span>
+                	<span class="post-date-month">24 </span><span class="post-date-month">Mar</span> <span class="post-date-year">2015</span>
             	</span>
-            	
-            
             	
             
 
@@ -129,8 +127,6 @@
 					<a class="post-category post-category-golang" href="http://jijeshmohan.github.io//categories/golang">Golang</a>
 				
 				</div>
-			
-
 			
 
 			
@@ -155,6 +151,13 @@ But where as in the case of <code>/user/admin</code> the <code>userHandle</code>
 
 	
 			
+		    	<div class="social-sharing">
+	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
+	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
+	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f&title=Gorilla%20mux%20-%20Issue%20with%20order%20of%20routes&summary=Gorilla%20toolkit%20is%20one%20of%20the%20favorite%20http%20multiplexer%20library%20of%20gophers.%20I%20have%20been%20using%20the%20gorilla%20mux%20for%20quite%20sometime%20for%20micro%20services.%20Mux%20allows%20you%20to%20define%20both%20static%20and%20dynamic%20routes.%20Gorilla%20mux%20allows%20you%20to%20add%20similar%20routes%20unlike%20other%20multiplexer%20libraries%20like%20http-router.%20Consider%20the%20following%20scenario%20router.Handle%28%26quot%3b%2fuser%2f%7bname%7d%26quot%3b%2cuserHandle%29%20router.Handle%28%26quot%3b%2fuser%2fadmin%26quot%3b%2cadminHandle%29%20When%20you%20hit%20%2fuser%2fuser1%20as%20expected%20userHandle%20function%20will%20be%20called.%20But%20where%20as%20in%20the%20case%20of%20%2fuser%2fadmin%20the%20userHandle%20will%20be%20called%20instead%20of%20adminHandle.}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
+	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=Gorilla%20mux%20-%20Issue%20with%20order%20of%20routes&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
+</div>
+		    
 
 			
 
@@ -215,6 +218,13 @@ But where as in the case of <code>/user/admin</code> the <code>userHandle</code>
   </div>
 	
 
+	
+		<script type="text/javascript">
+			function popupShare(url) {
+				window.open(url, '_blank', 'scrollbars,resizable,height=525,width=600');
+				return false;
+			}
+		</script>
 	
 
   
