@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Testing on Parthenon</title>
+    <link>http://jijeshmohan.github.io/categories/testing/</link>
+    <description>Recent content in Testing on Parthenon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c), Jijesh Mohan; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 17 Dec 2011 17:46:00 +0530</lastBuildDate>
+    <atom:link href="http://jijeshmohan.github.io/categories/testing/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>jUnit – Readable test names</title>
+      <link>http://jijeshmohan.github.io/post/junit-readable-test-names/</link>
+      <pubDate>Sat, 17 Dec 2011 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/junit-readable-test-names/</guid>
+      <description>&lt;p&gt;Java camel-case function names are readable if it has only two or three words in it. Test names are little longer for specifying the context and what it’s testing. This is anyway better than adding a detailed comment for the test which will get outdated pretty soon.&lt;/p&gt;
+
+&lt;p&gt;The problem comes when reading the jUnit test report which contains big names. It is hard to read such test names. Here are some of the tests from the famous webdriver project:&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/junit_eclipse_plugin_1.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;These are pretty long names, Isn’t it!&lt;/p&gt;
+
+&lt;p&gt;One option to make it readable is to use snake-case
+&lt;code&gt;eg. test_should_return_null_when_getting_the_value_of_an_attribute_that_is_not_listed.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;But this will be a violation towards java coding style, Also it is difficult to follow two standards in TDD(snake-case for tests and camel-case for normal functions).&lt;/p&gt;
+
+&lt;p&gt;Another option is to make a custom runner in jUnit which converts camel-case tests names to readable text (humanize) . Here is the code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class ReadableTest extends BlockJUnit4ClassRunner {
+ @Override
+ protected String testName(FrameworkMethod method) {
+ 	return StringUtil.humanize(method.getMethod().getName());
+ }
+ public ReadableTest(Class&amp;lt;?&amp;gt; klass) throws InitializationError {
+    super(klass);
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Annotate the jUnit Test class with this runner &lt;code&gt;eg: @RunWith(ReadableTest.class)&lt;/code&gt; and run your tests.&lt;/p&gt;
+
+&lt;p&gt;That’s it. See the following screenshot&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/junit_eclipse_plugin.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The same humanized test names can be seen in Jenkins also.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

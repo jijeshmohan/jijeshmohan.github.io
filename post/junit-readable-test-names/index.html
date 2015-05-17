@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Redcukes // Parthenon
+    jUnit – Readable test names // Parthenon
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -11,15 +11,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<meta name="description" content="Running redmine stories using cucumber ">
-<meta name="keywords" content="ruby,cucumber,">
+<meta name="description" content="JUnit – Readable test names ">
+<meta name="keywords" content="java,junit,unit test,">
 <meta name="author" content="Jijesh Mohan">
 
-  <meta property="og:title" content="Redcukes" />
-<meta property="og:description" content="Running redmine stories using cucumber" />
+  <meta property="og:title" content="jUnit – Readable test names" />
+<meta property="og:description" content="JUnit – Readable test names" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://jijeshmohan.github.io/post/redcukes/" />
+<meta property="og:url" content="http://jijeshmohan.github.io/post/junit-readable-test-names/" />
 
 
   
@@ -108,14 +108,14 @@
 	    
   		<section class="post">
             <h1 class="post-title">
-              <a href="http://jijeshmohan.github.io/post/redcukes">Redcukes</a>
+              <a href="http://jijeshmohan.github.io/post/junit-readable-test-names">jUnit – Readable test names</a>
             </h1>
             <h3 class="post-subtitle">
-            	Running redmine stories using cucumber
+            	
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-month">21 </span><span class="post-date-month">Mar</span> <span class="post-date-year">2012</span>
+                	<span class="post-date-month">17 </span><span class="post-date-month">Dec</span> <span class="post-date-year">2011</span>
             	</span>
             	
             
@@ -133,53 +133,70 @@
 			
 				<div class="post-categories">
 				
-					<a class="post-category post-category-development" href="http://jijeshmohan.github.io//categories/development">Development</a>
+					<a class="post-category post-category-testing" href="http://jijeshmohan.github.io//categories/testing">Testing</a>
 				
-					<a class="post-category post-category-ruby" href="http://jijeshmohan.github.io//categories/ruby">Ruby</a>
+					<a class="post-category post-category-java" href="http://jijeshmohan.github.io//categories/java">Java</a>
 				
 				</div>
 			
 
 			
 
-            <p>I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files. This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.</p>
+            <p>Java camel-case function names are readable if it has only two or three words in it. Test names are little longer for specifying the context and what it’s testing. This is anyway better than adding a detailed comment for the test which will get outdated pretty soon.</p>
 
-<p>To avoid this problem I have developed a ruby gem called <a href="https://github.com/jijeshmohan/redcukes">Redcukes</a> for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.</p>
+<p>The problem comes when reading the jUnit test report which contains big names. It is hard to read such test names. Here are some of the tests from the famous webdriver project:</p>
 
-<p>For using this gem, make sure that the REST API is enabled in redmine (<code>Administration &gt; Settings -&gt; Authentication -&gt; Enable REST web service</code>). It is better to define another user role for cucumber tests with required issue modification rights.</p>
+<p>
+<figure >
+    
+        <img src="http://jijeshmohan.github.io/img/junit_eclipse_plugin_1.png" />
+    
+    
+</figure>
+</p>
 
-<p>Install gem using gem install redcukes. In cucumber projects directory, create env.rb under support directory.</p>
+<p>These are pretty long names, Isn’t it!</p>
 
-<p>Edit env.rb file and add following configuration</p>
+<p>One option to make it readable is to use snake-case
+<code>eg. test_should_return_null_when_getting_the_value_of_an_attribute_that_is_not_listed.</code></p>
 
-<pre><code class="language-ruby">require 'redcukes'
+<p>But this will be a violation towards java coding style, Also it is difficult to follow two standards in TDD(snake-case for tests and camel-case for normal functions).</p>
 
-Redcukes::Redmine.configure do |config|
- config.site = redmine url
- config.user = redmine username
- config.password = redmine password
- end
+<p>Another option is to make a custom runner in jUnit which converts camel-case tests names to readable text (humanize) . Here is the code</p>
+
+<pre><code class="language-java">public class ReadableTest extends BlockJUnit4ClassRunner {
+ @Override
+ protected String testName(FrameworkMethod method) {
+ 	return StringUtil.humanize(method.getMethod().getName());
+ }
+ public ReadableTest(Class&lt;?&gt; klass) throws InitializationError {
+    super(klass);
+ }
+}
 </code></pre>
 
-<p>It is also possible to add issue filter using search_filter property</p>
+<p>Annotate the jUnit Test class with this runner <code>eg: @RunWith(ReadableTest.class)</code> and run your tests.</p>
 
-<p>e.g : <code>config.search_filter = {:project_id =&gt; ‘iframe’,:tracker_id =&gt; 2}</code></p>
+<p>That’s it. See the following screenshot</p>
 
-<p>The default status updates are “Resolved” or “Rejected” according to feature passed or failed. This can be customized like below</p>
+<p>
+<figure >
+    
+        <img src="http://jijeshmohan.github.io/img/junit_eclipse_plugin.png" />
+    
+    
+</figure>
+</p>
 
-<p>e.g <code>config.result_status = {:passed =&gt; 7,:failed =&gt; 8}</code></p>
-
-<p>I have created two more issue status called Passed, Failed and gave given these status ids in the above configuration.</p>
-
-<p>This will be a perfect executable documentation for your project.</p>
+<p>The same humanized test names can be seen in Jenkins also.</p>
 
 	
 			
 		    	<div class="social-sharing">
-	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
-	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
-	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f&title=Redcukes&summary=I%20have%20seen%20projects%20where%20userstories%20are%20managed%20in%20redmine%20along%20with%20acceptance%20criteria.%20But%20while%20automating%20with%20cucumber%20all%20these%20stories%20and%20scenarios%20are%20again%20replicated%20in%20cucumber%20feature%20files.%20This%20leads%20to%20inconsistency%20due%20to%20the%20story%20modification%20in%20redmine%20which%20is%20not%20synced%20with%20cucumber%20feature%20files.%20To%20avoid%20this%20problem%20I%20have%20developed%20a%20ruby%20gem%20called%20Redcukes%20for%20integrating%20redmine%20with%20cucumber%20and%20we%20can%20run%20cucumber%20against%20the%20user%20stories%20stored%20in%20redmine%20and%20update%20execution%20status%20back%20to%20redmine.}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
-	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=Redcukes&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
+	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fjunit-readable-test-names%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
+	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fjunit-readable-test-names%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
+	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fjunit-readable-test-names%2f&title=jUnit%20%e2%80%93%20Readable%20test%20names&summary=Java%20camel-case%20function%20names%20are%20readable%20if%20it%20has%20only%20two%20or%20three%20words%20in%20it.%20Test%20names%20are%20little%20longer%20for%20specifying%20the%20context%20and%20what%20it%e2%80%99s%20testing.%20This%20is%20anyway%20better%20than%20adding%20a%20detailed%20comment%20for%20the%20test%20which%20will%20get%20outdated%20pretty%20soon.%20The%20problem%20comes%20when%20reading%20the%20jUnit%20test%20report%20which%20contains%20big%20names.%20It%20is%20hard%20to%20read%20such%20test%20names.%20Here%20are%20some%20of%20the%20tests%20from%20the%20famous%20webdriver%20project%3a%20These%20are%20pretty%20long%20names%2c%20Isn%e2%80%99t%20it%21}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
+	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=jUnit%20%e2%80%93%20Readable%20test%20names&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fjunit-readable-test-names%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
 </div>
 		    
 
@@ -191,14 +208,14 @@ Redcukes::Redmine.configure do |config|
 					
 					<div class="paging-newer">
 						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="http://jijeshmohan.github.io/post/gorillamux">Gorilla mux - Issue with order of routes</a>
+						<a class="paging-link" href="http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine">Tracker control plugin for redmine</a>
 		            </div>
 		            
 
 					
 					<div class="paging-older">
 						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine">Tracker control plugin for redmine</a>
+			            <a class="paging-link" href="http://jijeshmohan.github.io/post/chromewatir1.5">ChromeWatir 1.5 released</a>
 		            </div>
 		            
 	            </div>
@@ -208,9 +225,9 @@ Redcukes::Redmine.configure do |config|
           	<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'jijeshmohan';
-    var disqus_identifier = 'http:\/\/jijeshmohan.github.io\/post\/redcukes\/';
-    var disqus_title = 'Redcukes';
-    var disqus_url = 'http:\/\/jijeshmohan.github.io\/post\/redcukes\/';
+    var disqus_identifier = 'http:\/\/jijeshmohan.github.io\/post\/junit-readable-test-names\/';
+    var disqus_title = 'jUnit – Readable test names';
+    var disqus_url = 'http:\/\/jijeshmohan.github.io\/post\/junit-readable-test-names\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

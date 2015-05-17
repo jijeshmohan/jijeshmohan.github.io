@@ -76,14 +76,148 @@ Redcukes::Redmine.configure do |config|
     </item>
     
     <item>
+      <title>Tracker control plugin for redmine</title>
+      <link>http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine/</link>
+      <pubDate>Sat, 24 Dec 2011 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine/</guid>
+      <description>
+
+&lt;p&gt;For the last couple of months I have started using redmine project management tool for my official work . The tool has most of the features including issue tracker, built-in wiki, forum and can even integrate SCM. Redmine is developed in ruby on rails platform and supports plug-ins which helps to add new features to the tool.&lt;/p&gt;
+
+&lt;p&gt;One of the feature which my team was looking at is to control the tracker wise issue creation, for example developers should not be able to create new requirement(tracker) issue. Redmine has access permission only in the issue creation level but not in tracker wise.&lt;/p&gt;
+
+&lt;p&gt;To add the above functionality to redmine, I have created a new redmine plugin called &lt;a href=&#34;http://www.redmine.org/plugins/redmine_track_control&#34;&gt;Redmine Tracker Control&lt;/a&gt;. The plugin supports following &lt;strong&gt;features&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Role based permission for creating issue with specific Tracker&lt;/li&gt;
+&lt;li&gt;Project Module to enable/disable tracker permission&lt;/li&gt;
+&lt;li&gt;Projects which are not enabled for tracker control module, uses default redmine behavior&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;installation:5beec7d8a923c135a36310f797fc47a6&#34;&gt;Installation&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Copy redmine_track_control directory to &lt;code&gt;#{RAILS_ROOT}/vendor/plugins&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restart Redmine&lt;/li&gt;
+&lt;li&gt;Goto &lt;code&gt;Redmine -&amp;gt; Administration -&amp;gt; Roles and Permissions  -&amp;gt; Permissions report&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Configure the permissions in Tracker Permissions section&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/track_control.jpg&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;To enable tracker permissions to project, Go to the &lt;code&gt;project -&amp;gt; Settings -&amp;gt; Modules&lt;/code&gt; and enable Tracker Permissions Module&lt;/p&gt;
+
+&lt;p&gt;You can download plugin from &lt;a href=&#34;https://github.com/jijeshmohan/redmine_track_control&#34;&gt;Github&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>jUnit – Readable test names</title>
+      <link>http://jijeshmohan.github.io/post/junit-readable-test-names/</link>
+      <pubDate>Sat, 17 Dec 2011 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/junit-readable-test-names/</guid>
+      <description>&lt;p&gt;Java camel-case function names are readable if it has only two or three words in it. Test names are little longer for specifying the context and what it’s testing. This is anyway better than adding a detailed comment for the test which will get outdated pretty soon.&lt;/p&gt;
+
+&lt;p&gt;The problem comes when reading the jUnit test report which contains big names. It is hard to read such test names. Here are some of the tests from the famous webdriver project:&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/junit_eclipse_plugin_1.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;These are pretty long names, Isn’t it!&lt;/p&gt;
+
+&lt;p&gt;One option to make it readable is to use snake-case
+&lt;code&gt;eg. test_should_return_null_when_getting_the_value_of_an_attribute_that_is_not_listed.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;But this will be a violation towards java coding style, Also it is difficult to follow two standards in TDD(snake-case for tests and camel-case for normal functions).&lt;/p&gt;
+
+&lt;p&gt;Another option is to make a custom runner in jUnit which converts camel-case tests names to readable text (humanize) . Here is the code&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;public class ReadableTest extends BlockJUnit4ClassRunner {
+ @Override
+ protected String testName(FrameworkMethod method) {
+ 	return StringUtil.humanize(method.getMethod().getName());
+ }
+ public ReadableTest(Class&amp;lt;?&amp;gt; klass) throws InitializationError {
+    super(klass);
+ }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Annotate the jUnit Test class with this runner &lt;code&gt;eg: @RunWith(ReadableTest.class)&lt;/code&gt; and run your tests.&lt;/p&gt;
+
+&lt;p&gt;That’s it. See the following screenshot&lt;/p&gt;
+
+&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/junit_eclipse_plugin.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The same humanized test names can be seen in Jenkins also.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ChromeWatir 1.5 released</title>
+      <link>http://jijeshmohan.github.io/post/chromewatir1.5/</link>
+      <pubDate>Fri, 20 Feb 2009 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/chromewatir1.5/</guid>
+      <description>&lt;p&gt;We have released a new version of ChromeWatir. You can get the gem or source from the &lt;a href=&#34;http://code.google.com/p/chrome-watir&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;What is new in this release&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Support for table and file field elements&lt;/li&gt;
+&lt;li&gt;Support for Element Collections like links, images, etc.&lt;/li&gt;
+&lt;li&gt;Refactoring and fixing defects in launcher code.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks for everyone who helped and encouraged us.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ChromeWatir - Watir for google chrome</title>
+      <link>http://jijeshmohan.github.io/post/chromewatir/</link>
+      <pubDate>Fri, 09 Jan 2009 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/chromewatir/</guid>
+      <description>&lt;p&gt;I am happy to announce that the first version of ChromeWatir has been released today. ChromeWatir is a port of watir for google chrome browser. The API follows a similar convention to Watir but there are a few differences. Please visit the &lt;a href=&#34;http://code.google.com/p/chrome-watir/&#34;&gt;ChromeWatir Google code&lt;/a&gt; for more details.&lt;/p&gt;
+
+&lt;p&gt;We are in the process of making it better by stabilizing it as well adding more functionality.&lt;/p&gt;
+
+&lt;p&gt;The first release is available as gem as well as source in the downloads page. Please have a try and give the feedback :)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>About</title>
       <link>http://jijeshmohan.github.io/about/</link>
-      <pubDate>Tue, 24 Jan 2012 17:38:11 +0530</pubDate>
+      <pubDate>Thu, 24 Jan 2008 17:38:11 +0530</pubDate>
       
       <guid>http://jijeshmohan.github.io/about/</guid>
       <description>
 
-&lt;p&gt;I am Jijesh living in Bangalore. Currently working at &lt;a href=&#34;http://www.sahajsoft.com/&#34;&gt;Sahaj&lt;/a&gt;.  This is the platform where I place most of my personal writings. I enjoy building softwares. My other interests are in photography and traveling.&lt;/p&gt;
+&lt;p&gt;I am &lt;strong&gt;Jijesh Mohan&lt;/strong&gt; living in Bangalore. Currently working at &lt;a href=&#34;http://www.sahajsoft.com/&#34;&gt;Sahaj&lt;/a&gt;.  This is the platform where I place most of my personal writings. I enjoy building softwares. My other interests are in photography and traveling.&lt;/p&gt;
 
 &lt;h3 id=&#34;some-of-my-works:6083a88ee3411b0d17ce02d738f69d47&#34;&gt;Some of my works:&lt;/h3&gt;
 

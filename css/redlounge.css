@@ -22,6 +22,7 @@ a {
   -webkit-transition:.5s;
   transition:.5s;
   color: #616161;
+  text-decoration: none;
 }
 a:hover {
 	color:#E54028;
@@ -185,8 +186,8 @@ h1.post-title a {
 	color: #7F1000;
 }
 a.post-author {
-	font-size: 0.9rem;
-	text-decoration: underline;
+	font-size: 0.8rem;
+	text-decoration: none;
 }
 .post-author-single {
 	font-size: 0.9rem;
