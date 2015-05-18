@@ -206,7 +206,7 @@ a.post-author {
     line-height: 1.75rem;
 }
 .post p {
-	margin-bottom: 1.75rem;
+	/*margin-bottom: 1.75rem;*/
 	margin-top: 0;
 }
 .post h3 {
