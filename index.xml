@@ -16,7 +16,7 @@
       <pubDate>Sun, 27 Dec 2015 22:44:24 +0530</pubDate>
       
       <guid>http://jijeshmohan.github.io/post/compress-http-request-in-go/</guid>
-      <description>&lt;p&gt;One of our product is using golang for the API server. There are multiple type of consumers, including mobile, web and even Smart TV ( in future ) for this API endpoints. One of the API is to send telemetry data from the client which is in json format. Due to the offline feature there are cases where the payload can be huge ( more than 1000 telemetry events in one request).&lt;/p&gt;
+      <description>&lt;p&gt;My current project is using golang for the API server. There are multiple type of consumers, including mobile, web and even Smart TV ( in future ) for this API endpoints. One of the API is to send telemetry data from the client which is in json format. Due to the offline feature there are cases where the payload can be huge ( more than 1000 telemetry events in one request).&lt;/p&gt;
 
 &lt;p&gt;We did a calculation on the time it takes to sync 1000 events in one request in various network conditions and the results are:&lt;/p&gt;
 
