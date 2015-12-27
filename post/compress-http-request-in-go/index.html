@@ -150,7 +150,7 @@
 </figure>
 </p>
 
-<p>To reduce this time, we tried to use couple of binary serialization technique like Messagepack, protocol buffer etc. but due to the variety of the platforms, we need to support pure JSON format in some cases. So that it leads us to check the normal compression support like any modern web server supports for http response.</p>
+<p>To reduce this time, we tried to use couple of binary serialization techniques like Messagepack, protocol buffer etc. But due to the variety of the platforms, we need to support pure JSON format in some cases. So that it leads us to check the normal compression support like any modern web server supports for http response.</p>
 
 <p>This helped us to continue with the same api endpoint with json format itself and with the help of ‘content-format’ header, endpoint determine whether it is a compressed content or not.</p>
 
