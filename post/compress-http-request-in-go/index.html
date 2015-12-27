@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
   <title>
-    Gorilla mux - Issue with order of routes // Parthenon
+    Compress http request payload in go // Parthenon
   </title>
 
   <link href="http://gmpg.org/xfn/11" rel="profile">
@@ -11,15 +11,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<meta name="description" content="Gorilla mux - Issue with order of routes ">
-<meta name="keywords" content="go,golang,gorilla mux,routes,">
+<meta name="description" content="Gzip http request payload in go ">
+<meta name="keywords" content="go,golang,http,gzip,">
 <meta name="author" content="Jijesh Mohan">
 
-  <meta property="og:title" content="Gorilla mux - Issue with order of routes" />
-<meta property="og:description" content="Gorilla mux - Issue with order of routes" />
+  <meta property="og:title" content="Compress http request payload in go" />
+<meta property="og:description" content="Gzip http request payload in go" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:url" content="http://jijeshmohan.github.io/post/gorillamux/" />
+<meta property="og:url" content="http://jijeshmohan.github.io/post/compress-http-request-in-go/" />
 
 
   
@@ -105,14 +105,14 @@
 		
   		<section class="post">
             <h1 class="post-title">
-              <a href="http://jijeshmohan.github.io/post/gorillamux">Gorilla mux - Issue with order of routes</a>
+              <a href="http://jijeshmohan.github.io/post/compress-http-request-in-go">Compress http request payload in go</a>
             </h1>
             <h3 class="post-subtitle">
             	
             </h3>
             
             	<span class="post-date">
-                	<span class="post-date-month">24 </span><span class="post-date-month">Mar</span> <span class="post-date-year">2015</span>
+                	<span class="post-date-month">27 </span><span class="post-date-month">Dec</span> <span class="post-date-year">2015</span>
             	</span>
             	
             
@@ -137,31 +137,67 @@
 
 			
 
-            <p><a href="gorillatoolkit.org">Gorilla toolkit</a> is one of the favorite http multiplexer library of gophers. I have been using the gorilla mux for quite sometime for micro services.
-Mux allows you to define both static and dynamic routes.</p>
+            <p>One of our product is using golang for the API server. There are multiple type of consumers, including mobile, web and even Smart TV ( in future ) for this API endpoints. One of the API is to send telemetry data from the client which is in json format. Due to the offline feature there are cases where the payload can be huge ( more than 1000 telemetry events in one request).</p>
 
-<p>Gorilla mux allows you to add similar routes unlike other multiplexer libraries like http-router. Consider the following scenario</p>
+<p>We did a calculation on the time it takes to sync 1000 events in one request in various network conditions and the results are:</p>
 
-<pre><code class="language-go">router.Handle(&quot;/user/{name}&quot;,userHandle)
-router.Handle(&quot;/user/admin&quot;,adminHandle)
+<p>
+<figure >
+    
+        <img src="http://jijeshmohan.github.io/img/compress-http-result1.png" />
+    
+    
+</figure>
+</p>
+
+<p>To reduce this time, we tried to use couple of binary serialization technique like Messagepack, protocol buffer etc. but due to the variety of the platforms, we need to support pure JSON format in some cases. So that it leads us to check the normal compression support like any modern web server supports for http response.</p>
+
+<p>This helped us to continue with the same api endpoint with json format itself and with the help of ‘content-format’ header, endpoint determine whether it is a compressed content or not.</p>
+
+<p>The power of golang reader interface can be seen here.</p>
+
+<pre><code class="language-go">
+func getData(r *http.Request) (*TelemetryEvents, error) {
+	var data TelemetryEvents
+	var decoder *json.Decoder
+	switch r.Header.Get(&quot;Content-Encoding&quot;) {
+	case &quot;gzip&quot;:
+		gz, err := gzip.NewReader(r.Body)
+		if err != nil {
+			return nil, err
+		}
+		defer gz.Close()
+		decoder = json.NewDecoder(gz)
+	default:
+		decoder = json.NewDecoder(r.Body)
+	}
+	err := decoder.Decode(&amp;data)
+	if err != nil {
+		return nil, err
+	}
+	return &amp;data, nil
+}
+
 </code></pre>
 
-<p>When you hit <code>/user/user1</code> as expected <code>userHandle</code> function will be called.
-But where as in the case of <code>/user/admin</code> the <code>userHandle</code> will be called instead of <code>adminHandle</code>. This means the order of routes matter. Whichever route matches first, will be called by gorilla mux.</p>
+<p>and we have achieved the below numbers without any memory allocation overhead</p>
 
-<p>One way to fix this issue is to change the order of routes in the above code. This is easy when you have very less number of routes but will become very tedious when the number of routes increases.</p>
-
-<p>There is another way to handle this issue is to sort the routes depends on the length of the path and also ensure that static routes comes before dynamic routes.</p>
-
-<p>Implement <a href="https://golang.org/src/sort/sort.go#12">sort</a> interface of golang for the endpoints and sort it before adding it to mux router. You can find the implementation  <a href="https://github.com/jijeshmohan/janus/blob/master/rest/endpoint.go">here</a>.</p>
+<p>
+<figure >
+    
+        <img src="http://jijeshmohan.github.io/img/compress-http-result2.png" />
+    
+    
+</figure>
+</p>
 
 	
 			
 		    	<div class="social-sharing">
-	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
-	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
-	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f&title=Gorilla%20mux%20-%20Issue%20with%20order%20of%20routes&summary=Gorilla%20toolkit%20is%20one%20of%20the%20favorite%20http%20multiplexer%20library%20of%20gophers.%20I%20have%20been%20using%20the%20gorilla%20mux%20for%20quite%20sometime%20for%20micro%20services.%20Mux%20allows%20you%20to%20define%20both%20static%20and%20dynamic%20routes.%20Gorilla%20mux%20allows%20you%20to%20add%20similar%20routes%20unlike%20other%20multiplexer%20libraries%20like%20http-router.%20Consider%20the%20following%20scenario%20router.Handle%28%26quot%3b%2fuser%2f%7bname%7d%26quot%3b%2cuserHandle%29%20router.Handle%28%26quot%3b%2fuser%2fadmin%26quot%3b%2cadminHandle%29%20When%20you%20hit%20%2fuser%2fuser1%20as%20expected%20userHandle%20function%20will%20be%20called.%20But%20where%20as%20in%20the%20case%20of%20%2fuser%2fadmin%20the%20userHandle%20will%20be%20called%20instead%20of%20adminHandle.}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
-	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=Gorilla%20mux%20-%20Issue%20with%20order%20of%20routes&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fgorillamux%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
+	<a class="share-button-facebook" onClick="return popupShare(this.href);" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fcompress-http-request-in-go%2f" target="_blank"><i class="fa fa-facebook"><span>Like</span></i></a>
+	<a class="share-button-google-plus" onClick="return popupShare(this.href);" href="https://plus.google.com/share?url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fcompress-http-request-in-go%2f" target="_blank"><i class="fa fa-google-plus"><span>Google +1</span></i></a>
+	<a class="share-button-linkedin" onClick="return popupShare(this.href);" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fcompress-http-request-in-go%2f&title=Compress%20http%20request%20payload%20in%20go&summary=One%20of%20our%20product%20is%20using%20golang%20for%20the%20API%20server.%20There%20are%20multiple%20type%20of%20consumers%2c%20including%20mobile%2c%20web%20and%20even%20Smart%20TV%20%28%20in%20future%20%29%20for%20this%20API%20endpoints.%20One%20of%20the%20API%20is%20to%20send%20telemetry%20data%20from%20the%20client%20which%20is%20in%20json%20format.%20Due%20to%20the%20offline%20feature%20there%20are%20cases%20where%20the%20payload%20can%20be%20huge%20%28%20more%20than%201000%20telemetry%20events%20in%20one%20request%29.}&source=Parthenon" target="_blank"><i class="fa fa-linkedin"><span>Share on LinkedIn</span></i></a>
+	<a class="share-button-twitter" onClick="return popupShare(this.href);" href="http://twitter.com/share?text=Compress%20http%20request%20payload%20in%20go&url=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fcompress-http-request-in-go%2f" target="_blank"><i class="fa fa-twitter"><span>Tweet</span></i></a>	
 </div>
 		    
 
@@ -171,16 +207,11 @@ But where as in the case of <code>/user/admin</code> the <code>userHandle</code>
 				<div class="paging">
 					<span class="paging-label">More Reading</span>
 					
-					<div class="paging-newer">
-						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
-						<a class="paging-link" href="http://jijeshmohan.github.io/post/compress-http-request-in-go">Compress http request payload in go</a>
-		            </div>
-		            
 
 					
 					<div class="paging-older">
 						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
-			            <a class="paging-link" href="http://jijeshmohan.github.io/post/redcukes">Redcukes</a>
+			            <a class="paging-link" href="http://jijeshmohan.github.io/post/gorillamux">Gorilla mux - Issue with order of routes</a>
 		            </div>
 		            
 	            </div>
@@ -190,9 +221,9 @@ But where as in the case of <code>/user/admin</code> the <code>userHandle</code>
           	<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'jijeshmohan';
-    var disqus_identifier = 'http:\/\/jijeshmohan.github.io\/post\/gorillamux\/';
-    var disqus_title = 'Gorilla mux - Issue with order of routes';
-    var disqus_url = 'http:\/\/jijeshmohan.github.io\/post\/gorillamux\/';
+    var disqus_identifier = 'http:\/\/jijeshmohan.github.io\/post\/compress-http-request-in-go\/';
+    var disqus_title = 'Compress http request payload in go';
+    var disqus_url = 'http:\/\/jijeshmohan.github.io\/post\/compress-http-request-in-go\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
