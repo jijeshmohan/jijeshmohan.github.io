@@ -152,9 +152,9 @@
 
 <p>To reduce this time, we tried to use couple of binary serialization techniques like Messagepack, protocol buffer etc. But due to the variety of the platforms, we need to support pure JSON format in some cases. So that it leads us to check the normal compression support like any modern web server supports for http response.</p>
 
-<p>This helped us to continue with the same api endpoint with json format itself and with the help of ‘content-format’ header, endpoint determine whether it is a compressed content or not.</p>
+<p>This helped us to continue with the same api endpoint with json format itself and with the help of ‘Content-Encoding&rsquo; header, endpoint determine whether it is a compressed content or not.</p>
 
-<p>The power of golang reader interface can be seen here.</p>
+<p>The power of golang <a href="https://golang.org/pkg/io/#Reader">reader</a> interface can be seen here.</p>
 
 <pre><code class="language-go">
 func getData(r *http.Request) (*TelemetryEvents, error) {
