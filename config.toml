@@ -1,0 +1,23 @@
+languageCode = "en-us"
+title = "Parthenon"
+baseurl = "http://localhost:5000/"
+theme = "hugo-cactus-theme"
+disqusShortname = "xxxxxx"
+
+[params]
+	name = "Jijesh Mohan"
+	description = "Describe your website"
+	bio = "Developer - Gopher - Polygot"
+	# Enter optionally your twitter account
+	twitter = "jijeshmohan"
+	enableRSS = true
+
+	# 404 page
+	title404 = "Not Found"
+	subtitle404 = ""
+
+[social]
+    twitter  = "https://www.twitter.com/"
+    facebook = "https://www.facebook.com/"
+    github   = "https://www.github.com/jijeshmohan"
+    dribble  = "https://www.dribbble.com/"
