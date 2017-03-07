@@ -3,7 +3,6 @@ title = "Parthenon"
 baseurl = "http://jijeshmohan.github.io/"
 theme = "hugo-cactus-theme"
 disqusShortname = "jijeshmohan"
-publishDir = "docs"
 
 [params]
 	name = "Jijesh Mohan"
