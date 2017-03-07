@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Routes on Parthenon</title>
+    <link>http://jijeshmohan.github.io/tags/routes/index.xml</link>
+    <description>Recent content in Routes on Parthenon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://jijeshmohan.github.io/tags/routes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Gorilla mux - Issue with order of routes</title>
+      <link>http://jijeshmohan.github.io/post/gorilla-mux/</link>
+      <pubDate>Tue, 24 Mar 2015 22:44:24 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/gorilla-mux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;gorillatoolkit.org&#34;&gt;Gorilla toolkit&lt;/a&gt; is one of the favorite http multiplexer library of gophers. I have been using the gorilla mux for quite sometime for micro services.
+Mux allows you to define both static and dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Gorilla mux allows you to add similar routes unlike other multiplexer libraries like http-router. Consider the following scenario&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;router.Handle(&amp;quot;/user/{name}&amp;quot;,userHandle)
+router.Handle(&amp;quot;/user/admin&amp;quot;,adminHandle)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you hit &lt;code&gt;/user/user1&lt;/code&gt; as expected &lt;code&gt;userHandle&lt;/code&gt; function will be called.
+But where as in the case of &lt;code&gt;/user/admin&lt;/code&gt; the &lt;code&gt;userHandle&lt;/code&gt; will be called instead of &lt;code&gt;adminHandle&lt;/code&gt;. This means the order of routes matter. Whichever route matches first, will be called by gorilla mux.&lt;/p&gt;
+
+&lt;p&gt;One way to fix this issue is to change the order of routes in the above code. This is easy when you have very less number of routes but will become very tedious when the number of routes increases.&lt;/p&gt;
+
+&lt;p&gt;There is another way to handle this issue is to sort the routes depends on the length of the path and also ensure that static routes comes before dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Implement &lt;a href=&#34;https://golang.org/src/sort/sort.go#12&#34;&gt;sort&lt;/a&gt; interface of golang for the endpoints and sort it before adding it to mux router. You can find the implementation  &lt;a href=&#34;https://github.com/jijeshmohan/janus/blob/master/rest/endpoint.go&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

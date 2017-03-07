@@ -1,0 +1,268 @@
+    <!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="author" content="Jijesh Mohan">
+		<meta name="description" content="Describe your website">
+		<meta name="generator" content="Hugo 0.18.1" />
+		<title>Redcukes &middot; Parthenon</title>
+		<link rel="shortcut icon" href="http://jijeshmohan.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="http://jijeshmohan.github.io/css/style.css">
+		<link rel="stylesheet" href="http://jijeshmohan.github.io/css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="http://jijeshmohan.github.io/css/monosocialiconsfont.css">
+		
+
+		
+		<link href="http://jijeshmohan.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Parthenon" />
+		
+
+		<meta property="og:title" content="Redcukes" />
+<meta property="og:description" content="Running redmine stories using cucumber" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://jijeshmohan.github.io/post/redcukes/" />
+
+
+<meta property="og:updated_time" content="2012-03-21T17:46:00&#43;05:30"/>
+
+
+
+
+
+
+
+
+
+
+	    
+	    
+<meta itemprop="name" content="Redcukes">
+<meta itemprop="description" content="Running redmine stories using cucumber">
+
+
+<meta itemprop="dateModified" content="2012-03-21T17:46:00&#43;05:30" />
+<meta itemprop="wordCount" content="244">
+
+
+
+<meta itemprop="keywords" content="development,golang,java,ruby,testing,golang,http,routes," />
+
+	    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Redcukes"/>
+<meta name="twitter:description" content="Running redmine stories using cucumber"/>
+<meta name="twitter:site" content="@https://www.twitter.com/"/>
+
+
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='http://jijeshmohan.github.io/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+		<a href='http://jijeshmohan.github.io/about'>About</a>
+	
+
+	
+	<a class="cta" href="http://jijeshmohan.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>Redcukes</h1>
+                    <h2 class="headline">
+                    March 21, 2012 
+                    <br>
+                    
+                    </h2>
+                </header>
+                <section id="post-body">
+                    <p>I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files. This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.</p>
+
+<p>To avoid this problem I have developed a ruby gem called <a href="https://github.com/jijeshmohan/redcukes">Redcukes</a> for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.</p>
+
+<p>For using this gem, make sure that the REST API is enabled in redmine (<code>Administration &gt; Settings -&gt; Authentication -&gt; Enable REST web service</code>). It is better to define another user role for cucumber tests with required issue modification rights.</p>
+
+<p>Install gem using gem install redcukes. In cucumber projects directory, create env.rb under support directory.</p>
+
+<p>Edit env.rb file and add following configuration</p>
+
+<pre><code class="language-ruby">require 'redcukes'
+
+Redcukes::Redmine.configure do |config|
+ config.site = redmine url
+ config.user = redmine username
+ config.password = redmine password
+ end
+</code></pre>
+
+<p>It is also possible to add issue filter using search_filter property</p>
+
+<p>e.g : <code>config.search_filter = {:project_id =&gt; ‘iframe’,:tracker_id =&gt; 2}</code></p>
+
+<p>The default status updates are “Resolved” or “Rejected” according to feature passed or failed. This can be customized like below</p>
+
+<p>e.g <code>config.result_status = {:passed =&gt; 7,:failed =&gt; 8}</code></p>
+
+<p>I have created two more issue status called Passed, Failed and gave given these status ids in the above configuration.</p>
+
+<p>This will be a perfect executable documentation for your project.</p>
+
+                </section>
+            </article>
+            <footer id="post-meta" class="clearfix">
+                <a href="https://twitter.com/jijeshmohan">
+                        <img class="avatar" src="http://jijeshmohan.github.io/images/avatar.png">
+                        <div>
+                            <span class="dark">Jijesh Mohan</span>
+                            <span></span>
+                        </div>
+                    </a>
+                <section id="sharing">
+                    <a class="twitter" href="https://twitter.com/intent/tweet?text=http%3a%2f%2fjijeshmohan.github.io%2fpost%2fredcukes%2f - Redcukes by @jijeshmohan"><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+                </section>
+            </footer>
+
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jijeshmohan';
+    var disqus_identifier = 'http:\/\/jijeshmohan.github.io\/post\/redcukes\/';
+    var disqus_title = 'Redcukes';
+    var disqus_url = 'http:\/\/jijeshmohan.github.io\/post\/redcukes\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            <ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+
+    
+    
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/compress-http-request/">Compress http request payload in go<aside class="dates">Dec 27</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/gorilla-mux/">Gorilla mux - Issue with order of routes<aside class="dates">Mar 24</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/redcukes/">Redcukes<aside class="dates">Mar 21</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine/">Tracker control plugin for redmine<aside class="dates">Dec 24</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/junit-readable-test-names/">jUnit – Readable test names<aside class="dates">Dec 17</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/chromewatir1.5/">ChromeWatir 1.5 released<aside class="dates">Feb 20</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="http://jijeshmohan.github.io/post/chromewatir/">ChromeWatir - Watir for google chrome<aside class="dates">Jan 9</aside></a>
+        </li>
+        
+   
+</ul>
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    
+    <a class="symbol" href="https://www.dribbble.com/">
+        dribble
+    </a>
+    
+    <a class="symbol" href="https://www.facebook.com/">
+        facebook
+    </a>
+    
+    <a class="symbol" href="https://www.github.com/jijeshmohan">
+        github
+    </a>
+    
+    <a class="symbol" href="https://www.twitter.com/">
+        twitterbird
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+        © Copyright 2017 Jijesh Mohan
+    
+    </p>
+</footer>
+
+        </section>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://jijeshmohan.github.io/js/main.js"></script>
+<script src="http://jijeshmohan.github.io/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+    </body>
+</html>

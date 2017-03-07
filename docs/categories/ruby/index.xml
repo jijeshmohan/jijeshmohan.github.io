@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ruby on Parthenon</title>
+    <link>http://jijeshmohan.github.io/categories/ruby/index.xml</link>
+    <description>Recent content in Ruby on Parthenon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://jijeshmohan.github.io/categories/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Redcukes</title>
+      <link>http://jijeshmohan.github.io/post/redcukes/</link>
+      <pubDate>Wed, 21 Mar 2012 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/redcukes/</guid>
+      <description>&lt;p&gt;I have seen projects where userstories are managed in redmine along with acceptance criteria. But while automating with cucumber all these stories and scenarios are again replicated in cucumber feature files. This leads to inconsistency due to the story modification in redmine which is not synced with cucumber feature files.&lt;/p&gt;
+
+&lt;p&gt;To avoid this problem I have developed a ruby gem called &lt;a href=&#34;https://github.com/jijeshmohan/redcukes&#34;&gt;Redcukes&lt;/a&gt; for integrating redmine with cucumber and we can run cucumber against the user stories stored in redmine and update execution status back to redmine.&lt;/p&gt;
+
+&lt;p&gt;For using this gem, make sure that the REST API is enabled in redmine (&lt;code&gt;Administration &amp;gt; Settings -&amp;gt; Authentication -&amp;gt; Enable REST web service&lt;/code&gt;). It is better to define another user role for cucumber tests with required issue modification rights.&lt;/p&gt;
+
+&lt;p&gt;Install gem using gem install redcukes. In cucumber projects directory, create env.rb under support directory.&lt;/p&gt;
+
+&lt;p&gt;Edit env.rb file and add following configuration&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;redcukes&#39;
+
+Redcukes::Redmine.configure do |config|
+ config.site = redmine url
+ config.user = redmine username
+ config.password = redmine password
+ end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is also possible to add issue filter using search_filter property&lt;/p&gt;
+
+&lt;p&gt;e.g : &lt;code&gt;config.search_filter = {:project_id =&amp;gt; ‘iframe’,:tracker_id =&amp;gt; 2}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The default status updates are “Resolved” or “Rejected” according to feature passed or failed. This can be customized like below&lt;/p&gt;
+
+&lt;p&gt;e.g &lt;code&gt;config.result_status = {:passed =&amp;gt; 7,:failed =&amp;gt; 8}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;I have created two more issue status called Passed, Failed and gave given these status ids in the above configuration.&lt;/p&gt;
+
+&lt;p&gt;This will be a perfect executable documentation for your project.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tracker control plugin for redmine</title>
+      <link>http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine/</link>
+      <pubDate>Sat, 24 Dec 2011 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/tracker-control-plugin-for-redmine/</guid>
+      <description>
+
+&lt;p&gt;For the last couple of months I have started using redmine project management tool for my official work . The tool has most of the features including issue tracker, built-in wiki, forum and can even integrate SCM. Redmine is developed in ruby on rails platform and supports plug-ins which helps to add new features to the tool.&lt;/p&gt;
+
+&lt;p&gt;One of the feature which my team was looking at is to control the tracker wise issue creation, for example developers should not be able to create new requirement(tracker) issue. Redmine has access permission only in the issue creation level but not in tracker wise.&lt;/p&gt;
+
+&lt;p&gt;To add the above functionality to redmine, I have created a new redmine plugin called &lt;a href=&#34;http://www.redmine.org/plugins/redmine_track_control&#34;&gt;Redmine Tracker Control&lt;/a&gt;. The plugin supports following &lt;strong&gt;features&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Role based permission for creating issue with specific Tracker&lt;/li&gt;
+&lt;li&gt;Project Module to enable/disable tracker permission&lt;/li&gt;
+&lt;li&gt;Projects which are not enabled for tracker control module, uses default redmine behavior&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;installation&#34;&gt;Installation&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Copy redmine_track_control directory to &lt;code&gt;#{RAILS_ROOT}/vendor/plugins&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restart Redmine&lt;/li&gt;
+&lt;li&gt;Goto &lt;code&gt;Redmine -&amp;gt; Administration -&amp;gt; Roles and Permissions  -&amp;gt; Permissions report&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Configure the permissions in Tracker Permissions section&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/track_control.jpg&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;To enable tracker permissions to project, Go to the &lt;code&gt;project -&amp;gt; Settings -&amp;gt; Modules&lt;/code&gt; and enable Tracker Permissions Module&lt;/p&gt;
+
+&lt;p&gt;You can download plugin from &lt;a href=&#34;https://github.com/jijeshmohan/redmine_track_control&#34;&gt;Github&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ChromeWatir 1.5 released</title>
+      <link>http://jijeshmohan.github.io/post/chromewatir1.5/</link>
+      <pubDate>Fri, 20 Feb 2009 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/chromewatir1.5/</guid>
+      <description>&lt;p&gt;We have released a new version of ChromeWatir. You can get the gem or source from the &lt;a href=&#34;http://code.google.com/p/chrome-watir&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;What is new in this release&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Support for table and file field elements&lt;/li&gt;
+&lt;li&gt;Support for Element Collections like links, images, etc.&lt;/li&gt;
+&lt;li&gt;Refactoring and fixing defects in launcher code.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Thanks for everyone who helped and encouraged us.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ChromeWatir - Watir for google chrome</title>
+      <link>http://jijeshmohan.github.io/post/chromewatir/</link>
+      <pubDate>Fri, 09 Jan 2009 17:46:00 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/chromewatir/</guid>
+      <description>&lt;p&gt;I am happy to announce that the first version of ChromeWatir has been released today. ChromeWatir is a port of watir for google chrome browser. The API follows a similar convention to Watir but there are a few differences. Please visit the &lt;a href=&#34;http://code.google.com/p/chrome-watir/&#34;&gt;ChromeWatir Google code&lt;/a&gt; for more details.&lt;/p&gt;
+
+&lt;p&gt;We are in the process of making it better by stabilizing it as well adding more functionality.&lt;/p&gt;
+
+&lt;p&gt;The first release is available as gem as well as source in the downloads page. Please have a try and give the feedback :)&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

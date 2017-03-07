@@ -1,8 +1,9 @@
 languageCode = "en-us"
 title = "Parthenon"
-baseurl = "http://localhost:5000/"
+baseurl = "http://jijeshmohan.github.io/"
 theme = "hugo-cactus-theme"
-disqusShortname = "xxxxxx"
+disqusShortname = "jijeshmohan"
+publishDir = "docs"
 
 [params]
 	name = "Jijesh Mohan"
