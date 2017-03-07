@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on Parthenon</title>
+    <link>http://jijeshmohan.github.io/categories/golang/index.xml</link>
+    <description>Recent content in Golang on Parthenon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://jijeshmohan.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Compress http request payload in go</title>
+      <link>http://jijeshmohan.github.io/post/compress-http-request/</link>
+      <pubDate>Sun, 27 Dec 2015 22:44:24 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/compress-http-request/</guid>
+      <description>&lt;p&gt;My current project is using golang for the API server. There are multiple type of consumers, including mobile, web and even Smart TV ( in future ) for this API endpoints. One of the API is to send telemetry data from the client which is in json format. Due to the offline feature there are cases where the payload can be huge ( more than 1000 telemetry events in one request).&lt;/p&gt;
+
+&lt;p&gt;We did a calculation on the time it takes to sync 1000 events in one request in various network conditions and the results are:&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/compress-http-result1.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;To reduce this time, we tried to use couple of binary serialization techniques like Messagepack, protocol buffer etc. But due to the variety of the platforms, we need to support pure JSON format in some cases. So that it leads us to check the normal compression support like any modern web server supports for http response.&lt;/p&gt;
+
+&lt;p&gt;This helped us to continue with the same api endpoint with json format itself and with the help of ‘Content-Encoding&amp;rsquo; header, endpoint determine whether it is a compressed content or not.&lt;/p&gt;
+
+&lt;p&gt;The power of golang &lt;a href=&#34;https://golang.org/pkg/io/#Reader&#34;&gt;reader&lt;/a&gt; interface can be seen here.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;
+func getData(r *http.Request) (*TelemetryEvents, error) {
+	var data TelemetryEvents
+	var decoder *json.Decoder
+	switch r.Header.Get(&amp;quot;Content-Encoding&amp;quot;) {
+	case &amp;quot;gzip&amp;quot;:
+		gz, err := gzip.NewReader(r.Body)
+		if err != nil {
+			return nil, err
+		}
+		defer gz.Close()
+		decoder = json.NewDecoder(gz)
+	default:
+		decoder = json.NewDecoder(r.Body)
+	}
+	err := decoder.Decode(&amp;amp;data)
+	if err != nil {
+		return nil, err
+	}
+	return &amp;amp;data, nil
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and we have achieved the below numbers without any memory allocation overhead&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://jijeshmohan.github.io/img/compress-http-result2.png&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>Gorilla mux - Issue with order of routes</title>
+      <link>http://jijeshmohan.github.io/post/gorilla-mux/</link>
+      <pubDate>Tue, 24 Mar 2015 22:44:24 +0530</pubDate>
+      
+      <guid>http://jijeshmohan.github.io/post/gorilla-mux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;gorillatoolkit.org&#34;&gt;Gorilla toolkit&lt;/a&gt; is one of the favorite http multiplexer library of gophers. I have been using the gorilla mux for quite sometime for micro services.
+Mux allows you to define both static and dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Gorilla mux allows you to add similar routes unlike other multiplexer libraries like http-router. Consider the following scenario&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;router.Handle(&amp;quot;/user/{name}&amp;quot;,userHandle)
+router.Handle(&amp;quot;/user/admin&amp;quot;,adminHandle)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you hit &lt;code&gt;/user/user1&lt;/code&gt; as expected &lt;code&gt;userHandle&lt;/code&gt; function will be called.
+But where as in the case of &lt;code&gt;/user/admin&lt;/code&gt; the &lt;code&gt;userHandle&lt;/code&gt; will be called instead of &lt;code&gt;adminHandle&lt;/code&gt;. This means the order of routes matter. Whichever route matches first, will be called by gorilla mux.&lt;/p&gt;
+
+&lt;p&gt;One way to fix this issue is to change the order of routes in the above code. This is easy when you have very less number of routes but will become very tedious when the number of routes increases.&lt;/p&gt;
+
+&lt;p&gt;There is another way to handle this issue is to sort the routes depends on the length of the path and also ensure that static routes comes before dynamic routes.&lt;/p&gt;
+
+&lt;p&gt;Implement &lt;a href=&#34;https://golang.org/src/sort/sort.go#12&#34;&gt;sort&lt;/a&gt; interface of golang for the endpoints and sort it before adding it to mux router. You can find the implementation  &lt;a href=&#34;https://github.com/jijeshmohan/janus/blob/master/rest/endpoint.go&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
