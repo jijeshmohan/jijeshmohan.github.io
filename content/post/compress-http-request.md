@@ -2,6 +2,7 @@
 date = "2015-12-27T22:44:24+05:30"
 draft = false
 title = "Compress http request payload in go"
+slug = "compress-http-request-in-go"
 description = "HTTP request payload compression"
 categories = [ "Golang"]
 tags = ["golang", "http"]
